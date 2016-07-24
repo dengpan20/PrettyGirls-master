@@ -7,6 +7,7 @@ import coder.prettygirls.app.Constants;
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
 import coder.prettygirls.data.bean.PicBean;
+import coder.prettygirls.data.bean.PicCategory;
 import coder.prettygirls.data.source.GirlsDataSource;
 import coder.prettygirls.data.source.GirlsDataSourceInterface;
 import coder.prettygirls.http.GirlsJsoup;
@@ -68,8 +69,33 @@ public class RemoteGirlsDataSource implements GirlsDataSource ,GirlsDataSourceIn
             public void getList(List<FPicBean> list) {
                 //这里没有判断是否请求失败等
                 LogUtil.d("===" + list.size());
+                if (callBack != null)
+                    callBack.onGirlsLoaded(list);
+            }
+
+            @Override
+            public void getListFair() {
+
+            }
+        });
+
+    }
+    public void getGirls(int page, PicCategory category,final LoadHtmlGirlCallBack callBack) {
+        String url;
+        if(page==1){
+            url= Constants.category_baseUrl+category.getId()+"/";
+        }else{
+            url=Constants.category_baseUrl+category.getId()+"/"+page+".html";
+        }
+        LogUtil.d("===="+url);
+        ParsHtml parsHtml=GirlsJsoup.getParsHtml();
+        parsHtml.getFpicAndUrl(url, new ParsHtml.ResponceInfo() {
+            @Override
+            public void getList(List<FPicBean> list) {
+                //这里没有判断是否请求失败等
+                LogUtil.d("===" + list.size());
                 if(callBack!=null)
-                callBack.onGirlsLoaded(list);
+                    callBack.onGirlsLoaded(list);
             }
 
             @Override
@@ -84,6 +110,11 @@ public class RemoteGirlsDataSource implements GirlsDataSource ,GirlsDataSourceIn
     @Override
     public void getGirl(final LoadGirlsCallback callback) {
         getGirls(1, 1, callback);
+    }
+
+    @Override
+    public void getGirl(int page, PicCategory category, LoadHtmlGirlCallBack callBack) {
+        getGirls(page,category,callBack);
     }
 
 

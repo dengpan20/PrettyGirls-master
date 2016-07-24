@@ -4,6 +4,7 @@ import java.util.List;
 
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
+import coder.prettygirls.data.bean.PicCategory;
 
 /**
  * Created by oracleen on 2016/6/29.
@@ -27,4 +28,5 @@ public interface GirlsDataSource {
     void getGirls(int page, int size, LoadGirlsCallback callback);
     void getGirls(int page, LoadHtmlGirlCallBack callBack);
     void getGirl(LoadGirlsCallback callback);
+    void getGirl(int page,PicCategory category,LoadHtmlGirlCallBack callBack);
 }

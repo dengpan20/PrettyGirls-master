@@ -10,7 +10,10 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
+
+import com.github.javiersantos.bottomdialogs.BottomDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,8 +22,11 @@ import coder.mylibrary.base.AppActivity;
 import coder.mylibrary.base.BaseFragment;
 import coder.prettygirls.R;
 import coder.prettygirls.about.AboutActivity;
+import coder.prettygirls.app.Constants;
+import coder.prettygirls.data.bean.PicCategory;
+import coder.prettygirls.widget.MyGridView;
 
-public class HomeActivity extends AppActivity {
+public class HomeActivity extends AppActivity implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -28,6 +34,12 @@ public class HomeActivity extends AppActivity {
     FloatingActionButton mFab;
 
     private long exitTime = 0;
+    private View view;
+
+    MyGridView myGridView;
+    private MyAdapter adapter;
+    BottomDialog bottomDialog = null;
+    GirlsFragment instance;
 
     @Override
     protected int getContentViewId() {
@@ -49,6 +61,16 @@ public class HomeActivity extends AppActivity {
     protected void initView() {
         mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
+        initBottomView();
+    }
+
+    private void initBottomView() {
+        view=View.inflate(this,R.layout.layout_bottom_view,null);
+//        ButterKnife.bind(this,view);
+        myGridView= (MyGridView) view.findViewById(R.id.mygrid_view);
+        adapter=new MyAdapter(this, Constants.getCateGory());
+        myGridView.setAdapter(adapter);
+        myGridView.setOnItemClickListener(this);
     }
 
     @OnClick(R.id.fab)
@@ -57,9 +79,17 @@ public class HomeActivity extends AppActivity {
         switch (v.getId()) {
             case R.id.fab:
                 // 必须明确使用mailto前缀来修饰邮件地址,如果使用
-                Uri uri = Uri.parse("mailto:18231195685@sina.cn");
-                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-                startActivity(Intent.createChooser(intent, "请选择邮件类应用"));
+//                Uri uri = Uri.parse("mailto:18231195685@sina.cn");
+//                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+//                startActivity(Intent.createChooser(intent, "请选择邮件类应用"));
+
+                if(bottomDialog==null) {
+                    bottomDialog = new BottomDialog.Builder(this)
+                            .setTitle("选择分类")
+                            .setCustomView(view)
+                            .build();
+                }
+                bottomDialog.show();
                 break;
         }
     }
@@ -85,7 +115,8 @@ public class HomeActivity extends AppActivity {
 
     @Override
     protected BaseFragment getFirstFragment() {
-        return GirlsFragment.getInstance();
+        instance = GirlsFragment.getInstance();
+        return instance;
     }
 
     @Override
@@ -102,5 +133,13 @@ public class HomeActivity extends AppActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        PicCategory item = (PicCategory) adapter.getItem(position);
+        instance.onRefresh(item);
+        mToolbar.setTitle(item.getName());
+        bottomDialog.dismiss();
     }
 }

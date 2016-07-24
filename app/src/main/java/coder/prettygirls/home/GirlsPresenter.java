@@ -4,8 +4,10 @@ import android.util.Log;
 
 import java.util.List;
 
+import coder.prettygirls.app.Constants;
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
+import coder.prettygirls.data.bean.PicCategory;
 import coder.prettygirls.data.source.GirlsDataSource;
 import coder.prettygirls.data.source.GirlsResponsitory;
 
@@ -27,7 +29,7 @@ public class GirlsPresenter implements GirlsContract.Presenter {
     @Override
     public void start() {
 //        getGirls(1, 20, true);
-        getGrils(1,true);
+        getGrils(1,true, Constants.getCateGory().get(0));
     }
 
     @Override
@@ -54,8 +56,8 @@ public class GirlsPresenter implements GirlsContract.Presenter {
     }
 
     @Override
-    public void getGrils(int page, final boolean isRefresh) {
-        mGirlsResponsitory.getGirl(page,new GirlsDataSource.LoadHtmlGirlCallBack(){
+    public void getGrils(int page, final boolean isRefresh,PicCategory category) {
+        mGirlsResponsitory.getGirl(page,category,new GirlsDataSource.LoadHtmlGirlCallBack(){
 
             @Override
             public void onGirlsLoaded(List<FPicBean> girlBeanlist) {

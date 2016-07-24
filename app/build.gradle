@@ -41,4 +41,5 @@ dependencies {
     compile project(':mylibrary')
     compile 'org.jsoup:jsoup:1.9.2'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.github.javiersantos:BottomDialogs:1.1'
 }

@@ -21,8 +21,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import coder.mylibrary.base.BaseFragment;
 import coder.prettygirls.R;
+import coder.prettygirls.app.Constants;
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
+import coder.prettygirls.data.bean.PicCategory;
 import coder.prettygirls.girl.GirlActivity;
 import coder.prettygirls.util.LogUtil;
 
@@ -49,6 +51,7 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
     private int size = 20;
 
     private Unbinder unbinder;
+    private PicCategory  category= Constants.getCateGory().get(0);
 
     @Override
     protected int getLayoutId() {
@@ -100,7 +103,13 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
     @Override
     public void onRefresh() {
 //        mPresenter.getGirls(1, size, true);
-        mPresenter.getGrils(1,true);
+        mPresenter.getGrils(1, true,category);
+        page = 1;
+    }
+    public void onRefresh(PicCategory category) {
+//        mPresenter.getGirls(1, size, true);
+        this.category=category;
+        mPresenter.getGrils(1,true,category);
         page = 1;
     }
 
@@ -110,7 +119,7 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
             LogUtil.d(TAG, "onloadmore");
             page++;
 //            mPresenter.getGirls(page, size, false);
-            mPresenter.getGrils(page,false);
+            mPresenter.getGrils(page,false,category);
         }
     }
 

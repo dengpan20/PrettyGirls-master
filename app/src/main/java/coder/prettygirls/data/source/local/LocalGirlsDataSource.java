@@ -1,5 +1,6 @@
 package coder.prettygirls.data.source.local;
 
+import coder.prettygirls.data.bean.PicCategory;
 import coder.prettygirls.data.source.GirlsDataSource;
 
 /**
@@ -24,6 +25,11 @@ public class LocalGirlsDataSource implements GirlsDataSource {
 
     @Override
     public void getGirl(LoadGirlsCallback callback) {
+
+    }
+
+    @Override
+    public void getGirl(int page, PicCategory category, LoadHtmlGirlCallBack callBack) {
 
     }
 }

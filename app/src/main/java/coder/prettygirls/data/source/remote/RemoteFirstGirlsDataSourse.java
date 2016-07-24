@@ -1,5 +1,6 @@
 package coder.prettygirls.data.source.remote;
 
+import coder.prettygirls.data.bean.PicCategory;
 import coder.prettygirls.data.source.GirlsDataSource;
 
 /**
@@ -22,6 +23,11 @@ public class RemoteFirstGirlsDataSourse implements GirlsDataSource {
 
     @Override
     public void getGirl(LoadGirlsCallback callback) {
+
+    }
+
+    @Override
+    public void getGirl(int page, PicCategory category, LoadHtmlGirlCallBack callBack) {
 
     }
 }

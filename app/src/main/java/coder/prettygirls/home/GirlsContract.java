@@ -6,6 +6,7 @@ import coder.prettygirls.BasePresenter;
 import coder.prettygirls.BaseView;
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
+import coder.prettygirls.data.bean.PicCategory;
 
 /**
  * Created by oracleen on 2016/6/29.
@@ -28,6 +29,6 @@ public interface GirlsContract {
 
     interface Presenter extends BasePresenter {
         void getGirls(int page, int size, boolean isRefresh);
-        void getGrils(int page ,boolean isRefresh);
+        void getGrils(int page ,boolean isRefresh,PicCategory category);
     }
 }
