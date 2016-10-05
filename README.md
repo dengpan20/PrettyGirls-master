@@ -3,7 +3,7 @@
 
 
 一个基于MVP+Retrofit+RxJava+MaterialDesign和Jsoup的大饱眼福的妹纸客户端。
-
+数据来源于某个网站，感兴趣的自己就看下源码，仅供学习只用，不作为商业用途。如有侵权，请告知。
 
 亲，喜欢就start一下吧
 
