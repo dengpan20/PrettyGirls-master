@@ -6,7 +6,8 @@
         android:id="@+id/mygrid_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:verticalSpacing="4dp"
+        android:verticalSpacing="8dp"
+        android:horizontalSpacing="8dp"
         android:numColumns="3">
 
     </coder.prettygirls.widget.MyGridView>
