@@ -8,11 +8,12 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
+import coder.prettygirls.data.bean.picbean.Prod;
 
 /**
  * adapter
  */
-public class GirlsAdapter extends RecyclerArrayAdapter<FPicBean> {
+public class GirlsAdapter extends RecyclerArrayAdapter<Prod> {
 
     public GirlsAdapter(Context context) {
         super(context);
@@ -21,7 +22,8 @@ public class GirlsAdapter extends RecyclerArrayAdapter<FPicBean> {
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
 //          return new GirlsViewHolder(parent);
-            return new GirsFHtlmViewHolder(parent);
+//            return new GirsFHtlmViewHolder(parent);
+        return new PicViewHolder(parent);
     }
 
 }

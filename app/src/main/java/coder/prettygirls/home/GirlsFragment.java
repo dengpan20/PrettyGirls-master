@@ -25,8 +25,10 @@ import coder.prettygirls.app.Constants;
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
 import coder.prettygirls.data.bean.PicCategory;
+import coder.prettygirls.data.bean.picbean.Prod;
 import coder.prettygirls.girl.GirlActivity;
 import coder.prettygirls.util.LogUtil;
+import coder.prettygirls.util.ToastUtil;
 
 /**
  * Created by oracleen on 2016/6/21.
@@ -44,6 +46,7 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
 
     private ArrayList<GirlsBean.ResultsEntity> data;
     private ArrayList<FPicBean > datas;
+    private ArrayList<Prod> prods;
     private GirlsAdapter mAdapter;
 
     private GirlsPresenter mPresenter;
@@ -78,6 +81,7 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
     private void initRecyclerView() {
         data = new ArrayList<>();
         datas=new ArrayList<>();
+        prods = new ArrayList<>();
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mGirlsRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         mAdapter = new GirlsAdapter(getContext());
@@ -90,10 +94,11 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
         mAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(mActivity, GirlActivity.class);
-                intent.putParcelableArrayListExtra("girls", datas);
-                intent.putExtra("current", position);
-                startActivity(intent);
+//                Intent intent = new Intent(mActivity, GirlActivity.class);
+//                intent.putParcelableArrayListExtra("girls", datas);
+//                intent.putExtra("current", position);
+//                startActivity(intent);
+                ToastUtil.showLong(getContext(),"12");
             }
         });
 
@@ -103,24 +108,27 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
     @Override
     public void onRefresh() {
 //        mPresenter.getGirls(1, size, true);
-        mPresenter.getGrils(1, true,category);
+//        mPresenter.getGrils(1, true,category);
+        mPresenter.getPic(1,true);
         page = 1;
     }
     public void onRefresh(PicCategory category) {
 //        mPresenter.getGirls(1, size, true);
-        this.category=category;
-        mPresenter.getGrils(1,true,category);
+//        this.category=category;
+//        mPresenter.getGrils(1,true,category);
+        mPresenter.getPic(1,true);
         page = 1;
     }
 
     @Override
     public void onLoadMore() {
-        if (datas.size() % 39 == 0) {
-            LogUtil.d(TAG, "onloadmore");
-            page++;
-//            mPresenter.getGirls(page, size, false);
-            mPresenter.getGrils(page,false,category);
-        }
+//        if (datas.size() % 39 == 0) {
+//            LogUtil.d(TAG, "onloadmore");
+//            page++;
+////            mPresenter.getGirls(page, size, false);
+//            mPresenter.getGrils(page,false,category);
+//        }
+        mPresenter.getPic(1,true);
     }
 
     @Override
@@ -162,13 +170,19 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
         datas.clear();
         datas.addAll(girlBeanlist);
         mAdapter.clear();
-        mAdapter.addAll(girlBeanlist);
+//        mAdapter.addAll(girlBeanlist);
     }
 
     @Override
     public void loadFpic(List<FPicBean> girlBeanlist) {
         datas.addAll(girlBeanlist);
-        mAdapter.addAll(girlBeanlist);
+//        mAdapter.addAll(girlBeanlist);
+    }
+
+    @Override
+    public void loadPic(List<Prod> prods) {
+//        prods.addAll(prods);
+        mAdapter.addAll(prods);
     }
 
     @Override

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +28,13 @@ import coder.prettygirls.app.Constants;
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
 import coder.prettygirls.data.bean.PicBean;
+import coder.prettygirls.data.bean.picbean.Category;
+import coder.prettygirls.data.bean.picbean.Prod;
 import coder.prettygirls.data.source.GirlsDataSource;
 import coder.prettygirls.data.source.GirlsDataSourceInterface;
 import coder.prettygirls.data.source.GirlsResponsitory;
+import coder.prettygirls.data.source.PicDataSource;
+import coder.prettygirls.data.source.PicResponsitory;
 import coder.prettygirls.util.BitmapUtil;
 import coder.prettygirls.util.LogUtil;
 import coder.prettygirls.widget.PinchImageView;
@@ -44,9 +49,11 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
     @BindView(R.id.rootView)
     LinearLayout mRootView;
     private GirlAdapter mAdapter;
+    private ProdsAdapter prodsAdapter;
 
     private ArrayList<GirlsBean.ResultsEntity> datas;
     private ArrayList<PicBean.ImagesBean> data;
+    private ArrayList<Prod> prods;
     private PicBean picBean;
     private int current;
     private FGirlAdapter mDAdapter;
@@ -110,9 +117,11 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
     protected void initView(View view, Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
         data=new ArrayList<>();
-        mDAdapter=new FGirlAdapter(mActivity,data);
+        prods= new ArrayList<>();
+        prodsAdapter = new ProdsAdapter(mActivity,prods);
+//        mDAdapter=new FGirlAdapter(mActivity,data);
 //        mAdapter = new GirlAdapter(mActivity, datas);
-        mViewPager.setAdapter(mDAdapter);
+        mViewPager.setAdapter(prodsAdapter);
 //        mViewPager.setCurrentItem(current);
         mViewPager.setOnPageChangeListener(this);
         Bundle bundle = getArguments();
@@ -120,21 +129,46 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
 //            datas = bundle.getParcelableArrayList("girls");
 //            current = bundle.getInt("current");
             String url=bundle.getString("url");
+            url = Constants.SHOP_ADDRESS;
             PicBean picBean=null;
-            new GirlsResponsitory().getGirlDetail(url, new GirlsDataSourceInterface.LoadInfoDetail() {
+            new PicResponsitory().getCate(url, 1, new PicDataSource.LoadPicCate() {
                 @Override
-                public void getList(PicBean picBean) {
-//                    data= (ArrayList<PicBean.ImagesBean>) picBean.getImages();
-                    data.addAll((ArrayList<PicBean.ImagesBean>) picBean.getImages());
-                    mDAdapter.notifyDataSetChanged();
+                public void onSussess(List<Category> categories) {
+                    if(categories!= null && categories.size()>0)
+                    new PicResponsitory().getItem(categories.get(0),1,new PicDataSource.LoadPicProds(){
 
+                        @Override
+                        public void onSussess(List<Prod> prods) {
+                            prods.addAll(prods);
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFail() {
+
+                        }
+                    });
                 }
 
                 @Override
-                public void getFailed() {
-                    data=new ArrayList<>();
+                public void onFail() {
+
                 }
             });
+//            new GirlsResponsitory().getGirlDetail(url, new GirlsDataSourceInterface.LoadInfoDetail() {
+//                @Override
+//                public void getList(PicBean picBean) {
+////                    data= (ArrayList<PicBean.ImagesBean>) picBean.getImages();
+//                    data.addAll((ArrayList<PicBean.ImagesBean>) picBean.getImages());
+//                    mDAdapter.notifyDataSetChanged();
+//
+//                }
+//
+//                @Override
+//                public void getFailed() {
+//                    data=new ArrayList<>();
+//                }
+//            });
         }else{
 //            datas=new ArrayList<>();
 //            data=new ArrayList<>();

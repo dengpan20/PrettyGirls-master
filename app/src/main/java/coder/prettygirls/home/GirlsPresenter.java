@@ -8,8 +8,12 @@ import coder.prettygirls.app.Constants;
 import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
 import coder.prettygirls.data.bean.PicCategory;
+import coder.prettygirls.data.bean.picbean.Category;
+import coder.prettygirls.data.bean.picbean.Prod;
 import coder.prettygirls.data.source.GirlsDataSource;
 import coder.prettygirls.data.source.GirlsResponsitory;
+import coder.prettygirls.data.source.PicDataSource;
+import coder.prettygirls.data.source.PicResponsitory;
 
 /**
  * Created by oracleen on 2016/6/29.
@@ -29,7 +33,8 @@ public class GirlsPresenter implements GirlsContract.Presenter {
     @Override
     public void start() {
 //        getGirls(1, 20, true);
-        getGrils(1,true, Constants.getCateGory().get(0));
+//        getGrils(1,true, Constants.getCateGory().get(0));
+        getPic(1,true);
     }
 
     @Override
@@ -74,6 +79,34 @@ public class GirlsPresenter implements GirlsContract.Presenter {
                 if (isRefresh) {
                     mView.showError();
                 }
+            }
+        });
+    }
+
+    @Override
+    public void getPic(int page, boolean isRefresh) {
+        String url = Constants.SHOP_ADDRESS;
+        new PicResponsitory().getCate(url, 1, new PicDataSource.LoadPicCate() {
+            @Override
+            public void onSussess(List<Category> categories) {
+                if(categories!= null && categories.size()>0)
+                    new PicResponsitory().getItem(categories.get(0),1,new PicDataSource.LoadPicProds(){
+
+                        @Override
+                        public void onSussess(List<Prod> prods) {
+                            mView.loadPic(prods);
+                        }
+
+                        @Override
+                        public void onFail() {
+
+                        }
+                    });
+            }
+
+            @Override
+            public void onFail() {
+
             }
         });
     }

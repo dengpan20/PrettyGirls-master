@@ -1,5 +1,6 @@
 package coder.prettygirls.http;
 
+import coder.prettygirls.http.jsoup.ParsHtml;
 import coder.prettygirls.http.jsoup.PicHtml;
 
 /**
@@ -7,17 +8,16 @@ import coder.prettygirls.http.jsoup.PicHtml;
  */
 
 public class PicJsoup {
-    private static PicJsoup picJsoup = null;
-    private PicJsoup (){
 
-    }
-     public static PicJsoup getInstance() {
-         if(picJsoup == null){
-             picJsoup = new PicJsoup();
-         }
-        return picJsoup;
-    }
-    private PicHtml getPicHtml(){
-        return  new PicHtml();
+    private static PicHtml picHtml;
+
+    public static PicHtml getParsHtml() {
+        if (picHtml == null) synchronized (GirlsJsoup.class) {
+            if (picHtml == null) {
+                picHtml = new PicHtml();
+                return picHtml;
+            }
+        }
+        return picHtml;
     }
 }
