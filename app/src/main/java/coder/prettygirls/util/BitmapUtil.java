@@ -23,6 +23,9 @@ import coder.prettygirls.app.MyApplication;
 public class BitmapUtil {
 
     public static android.graphics.Bitmap drawableToBitmap(Drawable drawable) {
+        if(drawable == null){
+            return null;
+        }
         android.graphics.Bitmap bitmap = android.graphics.Bitmap.createBitmap(
 
                 drawable.getIntrinsicWidth(),

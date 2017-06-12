@@ -1,12 +1,15 @@
 package coder.prettygirls.data.bean.picbean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by dengpan on 17/4/18.
  */
-public class Prod implements Serializable{
+public class Prod implements Serializable,Parcelable {
     private String prod_id;
     private String prodName;//产品名字
     private String prodUrl;//产品相册链接
@@ -16,6 +19,32 @@ public class Prod implements Serializable{
     private int getHtmlTime;//get html time
     private String category_id;
     private String shop_id;
+    public Prod(){
+
+    }
+    protected Prod(Parcel in) {
+        prod_id = in.readString();
+        prodName = in.readString();
+        prodUrl = in.readString();
+        prodImag_small = in.readString();
+        picSize = in.readInt();
+        piclist = in.createStringArrayList();
+        getHtmlTime = in.readInt();
+        category_id = in.readString();
+        shop_id = in.readString();
+    }
+
+    public static final Creator<Prod> CREATOR = new Creator<Prod>() {
+        @Override
+        public Prod createFromParcel(Parcel in) {
+            return new Prod(in);
+        }
+
+        @Override
+        public Prod[] newArray(int size) {
+            return new Prod[size];
+        }
+    };
 
     public String getProd_id() {
         return prod_id;
@@ -97,5 +126,23 @@ public class Prod implements Serializable{
 
     public void setGetHtmlTime(int getHtmlTime) {
         this.getHtmlTime = getHtmlTime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(prod_id);
+        dest.writeString(prodName);
+        dest.writeString(prodUrl);
+        dest.writeString(prodImag_small);
+        dest.writeInt(picSize);
+        dest.writeStringList(piclist);
+        dest.writeInt(getHtmlTime);
+        dest.writeString(category_id);
+        dest.writeString(shop_id);
     }
 }

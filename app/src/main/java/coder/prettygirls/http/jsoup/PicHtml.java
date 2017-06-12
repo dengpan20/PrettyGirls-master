@@ -10,6 +10,7 @@ import coder.prettygirls.data.bean.PicBean;
 import coder.prettygirls.data.bean.picbean.Category;
 import coder.prettygirls.data.bean.picbean.Prod;
 import coder.prettygirls.data.source.PicDataSource;
+import coder.prettygirls.util.LogUtil;
 
 /**
  * Created by Administrator on 2017/6/5.
@@ -33,6 +34,7 @@ public class PicHtml {
     }
 
     public void getCate(final String url, final int size, ResponceInfo responceInfo) {
+        this.responceInfo = responceInfo;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -46,10 +48,11 @@ public class PicHtml {
                     }
                 });
             }
-        });
+        }).start();
     }
 
     public void getItem(final Category category, final int size, ResponceItem responceItem) {
+        this.responceItem = responceItem;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -63,10 +66,11 @@ public class PicHtml {
                   }
               });
             }
-        });
+        }).start();
     }
 
     public void getProd(final Prod prod, final int size, ResponceProd responceProd) {
+        this.responceProd = responceProd;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -81,7 +85,7 @@ public class PicHtml {
                    }
                });
             }
-        });
+        }).start();
     }
 
 
@@ -101,10 +105,12 @@ public class PicHtml {
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            LogUtil.d("111="+msg.what);
             switch (msg.what){
                 case 1:
                     if(responceInfo!=null)
                         responceInfo.getList((List<Category>) msg.obj);
+                    LogUtil.i("listobj="+msg.obj.toString());
                     break;
                 case 2:
                     if(responceItem!= null){

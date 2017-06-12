@@ -8,6 +8,7 @@ import coder.prettygirls.http.PicJsoup;
 import coder.prettygirls.http.jsoup.GetInfoFromNet;
 import coder.prettygirls.http.jsoup.ParsHtml;
 import coder.prettygirls.http.jsoup.PicHtml;
+import coder.prettygirls.util.LogUtil;
 
 /**
  * Created by dengpan on 17/6/7.
@@ -22,6 +23,7 @@ public class PicResponsitory {
         PicJsoup.getParsHtml().getCate(url, size, new PicHtml.ResponceInfo() {
             @Override
             public void getList(List<Category> list) {
+                LogUtil.d("=="+list.toString());
                 callback.onSussess(list);
             }
 

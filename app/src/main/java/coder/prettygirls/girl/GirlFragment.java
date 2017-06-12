@@ -29,6 +29,7 @@ import coder.prettygirls.data.bean.FPicBean;
 import coder.prettygirls.data.bean.GirlsBean;
 import coder.prettygirls.data.bean.PicBean;
 import coder.prettygirls.data.bean.picbean.Category;
+import coder.prettygirls.data.bean.picbean.Pic;
 import coder.prettygirls.data.bean.picbean.Prod;
 import coder.prettygirls.data.source.GirlsDataSource;
 import coder.prettygirls.data.source.GirlsDataSourceInterface;
@@ -48,15 +49,15 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
     ViewPager mViewPager;
     @BindView(R.id.rootView)
     LinearLayout mRootView;
-    private GirlAdapter mAdapter;
+//    private GirlAdapter mAdapter;
     private ProdsAdapter prodsAdapter;
 
     private ArrayList<GirlsBean.ResultsEntity> datas;
     private ArrayList<PicBean.ImagesBean> data;
-    private ArrayList<Prod> prods;
+    private ArrayList<String> pics;
     private PicBean picBean;
     private int current;
-    private FGirlAdapter mDAdapter;
+//    private FGirlAdapter mDAdapter;
 
     private Unbinder unbinder;
 
@@ -82,14 +83,16 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
 //        fragment.setArguments(bundle);
 //        return fragment;
 //    }
-    public static GirlFragment newInstance(String url) {
+    public static GirlFragment newInstance(Prod prod) {
         Bundle bundle = new Bundle();
         GirlFragment fragment = new GirlFragment();
 //        bundle.putParcelableArrayList("girls", datas);
 //        bundle.getString("url");
 //        bundle.putInt("current", current);
-        bundle.putString("url",url);
-        LogUtil.d(GirlFragment.class.getSimpleName(),url);
+//        bundle.putString("url",url);
+        bundle.putSerializable("prod",prod);
+//        bundle.putParcelable("prod",prod);
+//        LogUtil.d(GirlFragment.class.getSimpleName(),url);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -117,8 +120,8 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
     protected void initView(View view, Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
         data=new ArrayList<>();
-        prods= new ArrayList<>();
-        prodsAdapter = new ProdsAdapter(mActivity,prods);
+        pics= new ArrayList<>();
+        prodsAdapter = new ProdsAdapter(mActivity,pics);
 //        mDAdapter=new FGirlAdapter(mActivity,data);
 //        mAdapter = new GirlAdapter(mActivity, datas);
         mViewPager.setAdapter(prodsAdapter);
@@ -129,25 +132,13 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
 //            datas = bundle.getParcelableArrayList("girls");
 //            current = bundle.getInt("current");
             String url=bundle.getString("url");
-            url = Constants.SHOP_ADDRESS;
-            PicBean picBean=null;
-            new PicResponsitory().getCate(url, 1, new PicDataSource.LoadPicCate() {
+            Prod prod = (Prod) bundle.getSerializable("prod");
+//            PicBean picBean=null;
+            new PicResponsitory().getProd(prod, 1, new PicDataSource.LoadPicProd() {
                 @Override
-                public void onSussess(List<Category> categories) {
-                    if(categories!= null && categories.size()>0)
-                    new PicResponsitory().getItem(categories.get(0),1,new PicDataSource.LoadPicProds(){
-
-                        @Override
-                        public void onSussess(List<Prod> prods) {
-                            prods.addAll(prods);
-                            mAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onFail() {
-
-                        }
-                    });
+                public void onSussess(Prod prod) {
+                    pics.addAll(prod.getPiclist());
+                    prodsAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -203,6 +194,9 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
      */
     private void getColor() {
         PinchImageView imageView = getCurrentImageView();
+        if(imageView == null){
+            return;
+        }
         Bitmap bitmap = BitmapUtil.drawableToBitmap(imageView.getDrawable());
         Palette.Builder builder = Palette.from(bitmap);
         builder.generate(new Palette.PaletteAsyncListener() {
@@ -250,7 +244,7 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     private PinchImageView getCurrentImageView() {
-        View currentItem = mDAdapter.getPrimaryItem();
+        View currentItem = prodsAdapter.getPrimaryItem();
         if (currentItem == null) {
             return null;
         }

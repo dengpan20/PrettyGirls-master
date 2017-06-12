@@ -15,6 +15,7 @@ import coder.mylibrary.base.AppActivity;
 import coder.mylibrary.base.BaseFragment;
 import coder.prettygirls.R;
 import coder.prettygirls.data.bean.FPicBean;
+import coder.prettygirls.data.bean.picbean.Prod;
 import coder.prettygirls.util.ColorUtil;
 
 /**
@@ -40,8 +41,8 @@ public class GirlActivity extends AppActivity implements GirlFragment.OnGirlChan
     @Override
     protected BaseFragment getFirstFragment() {
 //        mGirlFragment = GirlFragment.newInstance(getIntent().getParcelableArrayListExtra("girls"), getIntent().getIntExtra("current", 0));
-        FPicBean fPicBean= (FPicBean) getIntent().getParcelableArrayListExtra("girls").get(getIntent().getIntExtra("current", 0));
-        mGirlFragment = GirlFragment.newInstance(fPicBean.getUrl());
+        Prod prod= (Prod) getIntent().getParcelableArrayListExtra("prods").get(getIntent().getIntExtra("current", 0));
+        mGirlFragment = GirlFragment.newInstance(prod);
         return mGirlFragment;
     }
 

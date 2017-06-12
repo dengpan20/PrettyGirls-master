@@ -12,8 +12,10 @@ import java.util.ArrayList;
 
 import coder.prettygirls.R;
 import coder.prettygirls.data.bean.PicBean;
+import coder.prettygirls.data.bean.picbean.Pic;
 import coder.prettygirls.data.bean.picbean.Prod;
 import coder.prettygirls.util.LogUtil;
+import coder.prettygirls.util.YupooPicUtil;
 import coder.prettygirls.widget.PinchImageView;
 
 /**
@@ -22,13 +24,13 @@ import coder.prettygirls.widget.PinchImageView;
 
 public class ProdsAdapter extends PagerAdapter {
     private Context mContext;
-    private ArrayList<Prod> mDatas;
+    private ArrayList<String> mDatas;
     private LayoutInflater layoutInflater;
     private View mCurrentView;
 
-    public ProdsAdapter(Context context, ArrayList<Prod> datas) {
+    public ProdsAdapter(Context context, ArrayList<String> pics) {
         mContext = context;
-        mDatas = datas;
+        mDatas = pics;
         layoutInflater = LayoutInflater.from(this.mContext);
     }
 
@@ -49,11 +51,12 @@ public class ProdsAdapter extends PagerAdapter {
 
     @Override
     public View instantiateItem(ViewGroup container, int position) {
-        final String imageUrl =mDatas.get(position).getProdImag_small();
+        final String imageUrl =mDatas.get(position);
+        String bigImageUrl = YupooPicUtil.getBigPic(imageUrl);
         View view = layoutInflater.inflate(R.layout.item_girl_detail, container, false);
         PinchImageView imageView = (PinchImageView) view.findViewById(R.id.img);
         Glide.with(mContext)
-                .load(imageUrl)
+                .load(bigImageUrl)
                 .thumbnail(0.2f)
                 .into(imageView);
         container.addView(view);

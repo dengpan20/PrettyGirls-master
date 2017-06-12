@@ -14,6 +14,7 @@ import coder.prettygirls.data.source.GirlsDataSource;
 import coder.prettygirls.data.source.GirlsResponsitory;
 import coder.prettygirls.data.source.PicDataSource;
 import coder.prettygirls.data.source.PicResponsitory;
+import coder.prettygirls.util.LogUtil;
 
 /**
  * Created by oracleen on 2016/6/29.
@@ -89,12 +90,14 @@ public class GirlsPresenter implements GirlsContract.Presenter {
         new PicResponsitory().getCate(url, 1, new PicDataSource.LoadPicCate() {
             @Override
             public void onSussess(List<Category> categories) {
+                LogUtil.d("地处一次");
                 if(categories!= null && categories.size()>0)
                     new PicResponsitory().getItem(categories.get(0),1,new PicDataSource.LoadPicProds(){
 
                         @Override
                         public void onSussess(List<Prod> prods) {
                             mView.loadPic(prods);
+                            mView.showNormal();
                         }
 
                         @Override

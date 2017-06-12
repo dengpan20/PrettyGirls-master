@@ -94,11 +94,13 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
         mAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//                Intent intent = new Intent(mActivity, GirlActivity.class);
-//                intent.putParcelableArrayListExtra("girls", datas);
-//                intent.putExtra("current", position);
-//                startActivity(intent);
-                ToastUtil.showLong(getContext(),"12");
+                Intent intent = new Intent(mActivity, GirlActivity.class);
+                intent.putParcelableArrayListExtra("girls", datas);
+                intent.putParcelableArrayListExtra("prods", prods);
+                LogUtil.d(prods.size()+"产品数量");
+                intent.putExtra("current", position);
+                startActivity(intent);
+//                ToastUtil.showLong(getContext(),"12");
             }
         });
 
@@ -182,6 +184,7 @@ public class GirlsFragment extends BaseFragment implements GirlsContract.View, S
     @Override
     public void loadPic(List<Prod> prods) {
 //        prods.addAll(prods);
+        this.prods.addAll(prods);
         mAdapter.addAll(prods);
     }
 
