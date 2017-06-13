@@ -41,7 +41,8 @@ public class GirlActivity extends AppActivity implements GirlFragment.OnGirlChan
     @Override
     protected BaseFragment getFirstFragment() {
 //        mGirlFragment = GirlFragment.newInstance(getIntent().getParcelableArrayListExtra("girls"), getIntent().getIntExtra("current", 0));
-        Prod prod= (Prod) getIntent().getParcelableArrayListExtra("prods").get(getIntent().getIntExtra("current", 0));
+//        Prod prod= (Prod) getIntent().getParcelableArrayListExtra("prods").get(getIntent().getIntExtra("current", 0));
+        Prod prod = (Prod) getIntent().getSerializableExtra("prod");
         mGirlFragment = GirlFragment.newInstance(prod);
         return mGirlFragment;
     }

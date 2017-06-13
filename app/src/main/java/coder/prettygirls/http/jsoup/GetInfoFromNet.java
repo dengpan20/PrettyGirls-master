@@ -1,6 +1,8 @@
 package coder.prettygirls.http.jsoup;
 
 
+import android.util.Log;
+
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,10 +35,12 @@ public class GetInfoFromNet {
     }
     public static void startCate(String url,int page,OnGetInfoComplete complete){
 //        startNextPageCategory(url);
+        categories.clear();
         getCate(url,page,complete);
         complete.onComplete(categories);
     }
     public static void startItem(Category category,int page,OnGetItemComplete complete){
+        prods.clear();
         getCategoryItemWithPage(category,page);
         complete.Complete(prods);
     }
@@ -53,6 +57,7 @@ public class GetInfoFromNet {
      */
     public static void getCate(String url ,int page,OnGetInfoComplete complete){
         int pageNums = getPageNums(url);
+        LogUtil.d("传入的size＝"+page+"网页的page＝"+pageNums);
         if(page> pageNums){
             return;
         }else {
@@ -194,6 +199,7 @@ public class GetInfoFromNet {
      * @param
      */
     private static void getCategoryItemWithPage( Category category, int page) {
+        LogUtil.d("传入的size＝"+page);
         if(page==1||page == 0){
             page = 0;
         }

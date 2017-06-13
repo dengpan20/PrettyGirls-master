@@ -110,17 +110,19 @@ public class PicHtml {
                 case 1:
                     if(responceInfo!=null)
                         responceInfo.getList((List<Category>) msg.obj);
-                    LogUtil.i("listobj="+msg.obj.toString());
+                    LogUtil.i("CategoryList="+msg.obj.toString());
                     break;
                 case 2:
                     if(responceItem!= null){
                         responceItem.getList((List<Prod>) msg.obj);
                     }
+                    LogUtil.i("prodList="+msg.obj.toString());
                     break;
                 case 3:
                     if(responceProd!=null){
                         responceProd.getList((Prod) msg.obj);
                     }
+                    LogUtil.i("Prod="+msg.obj.toString());
                     break;
             }
 

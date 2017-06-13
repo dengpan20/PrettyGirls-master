@@ -5,19 +5,20 @@ import java.util.List;
 import coder.prettygirls.BasePresenter;
 import coder.prettygirls.BaseView;
 import coder.prettygirls.data.bean.picbean.Category;
+import coder.prettygirls.data.bean.picbean.Prod;
 
 /**
- * Created by Administrator on 2017/6/12.
+ * Created by dengpan on 17/6/13.
  */
 
-public interface CategoryContact {
+public interface CategoryItemListContact {
     interface View extends BaseView{
-        void refresh(List<Category> categories);
-        void loadMore(List<Category> categories);
+        void refresh(List<Prod> prods);
+        void loadMore(List<Prod> prods);
         void showNomal();
         void showError();
     }
     interface Presenter extends BasePresenter{
-        void getCate(int page,boolean isRefresh);
+        void getProds(Category category,int page,boolean isRefresh);
     }
 }

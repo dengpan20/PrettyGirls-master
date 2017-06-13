@@ -24,6 +24,7 @@ import coder.prettygirls.R;
 import coder.prettygirls.about.AboutActivity;
 import coder.prettygirls.app.Constants;
 import coder.prettygirls.data.bean.PicCategory;
+import coder.prettygirls.module.CategoryFragment;
 import coder.prettygirls.widget.MyGridView;
 
 public class HomeActivity extends AppActivity implements AdapterView.OnItemClickListener {
@@ -39,8 +40,8 @@ public class HomeActivity extends AppActivity implements AdapterView.OnItemClick
     MyGridView myGridView;
     private MyAdapter adapter;
     BottomDialog bottomDialog = null;
-    GirlsFragment instance;
-
+//    GirlsFragment instance;
+    CategoryFragment categoryFragment;
     @Override
     protected int getContentViewId() {
         return R.layout.activity_home;
@@ -115,8 +116,9 @@ public class HomeActivity extends AppActivity implements AdapterView.OnItemClick
 
     @Override
     protected BaseFragment getFirstFragment() {
-        instance = GirlsFragment.getInstance();
-        return instance;
+//        instance = GirlsFragment.getInstance();
+        categoryFragment = CategoryFragment.getInstant();
+        return categoryFragment;
     }
 
     @Override
@@ -138,7 +140,7 @@ public class HomeActivity extends AppActivity implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         PicCategory item = (PicCategory) adapter.getItem(position);
-        instance.onRefresh(item);
+//        instance.onRefresh(item);
         mToolbar.setTitle(item.getName());
         bottomDialog.dismiss();
     }

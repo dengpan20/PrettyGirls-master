@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    android:paddingTop="2dp">
+    <ImageView
+        android:id="@+id/img_category"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@mipmap/ic_launcher"
+        android:scaleType="fitCenter"
+        />
+    <TextView
+        android:id="@+id/tv_category_info"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:maxHeight="140dp"
+        android:gravity="left"
+        android:layout_toRightOf="@id/img_category"
+        android:text="asdj fk dfkf jadfasdf aksjdf lkas dklfjaksdfjlka dsk akjfkjasdfa jdf jdkladkjfajksd fkaj sdfkjasdkfaksdfkjash dfkjahsdjkfhaskdjf hlkjhkasjhhdfkjasdjhadhf sdhflkjahfdahsdhfkjashkjahdjfhdflkahsdfjahsdjhkjahdfka j
+         asdj fk dfkf jadfasdf aksjdf lkas dklfjaksdfjlka dsk akjfkjasdfa jdf jdkladkjfajksd fkaj sdfkjasdkfaksdfkjash dfkjahsdjkfhaskdjf hlkjhkasjhhdfkjasdjhadhf sdhflkjahfdahsdhfkjashkjahdjfhdflkahsdfjahsdjhkjahdfka j"/>
+
+</RelativeLayout>

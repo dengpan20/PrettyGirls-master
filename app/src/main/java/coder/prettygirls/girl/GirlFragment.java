@@ -38,6 +38,7 @@ import coder.prettygirls.data.source.PicDataSource;
 import coder.prettygirls.data.source.PicResponsitory;
 import coder.prettygirls.util.BitmapUtil;
 import coder.prettygirls.util.LogUtil;
+import coder.prettygirls.util.YupooPicUtil;
 import coder.prettygirls.widget.PinchImageView;
 
 /**
@@ -212,7 +213,7 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     public void saveGirl() {
-        String imgUrl = data.get(mViewPager.getCurrentItem()).getImage_url();
+        String imgUrl = YupooPicUtil.getBigPic(pics.get(mViewPager.getCurrentItem()));
         PinchImageView imageView = getCurrentImageView();
         Bitmap bitmap = BitmapUtil.drawableToBitmap(imageView.getDrawable());
         boolean isSuccess = BitmapUtil.saveBitmap(bitmap, Constants.dir, imgUrl.substring(imgUrl.lastIndexOf("/") + 1, imgUrl.length()), true);
