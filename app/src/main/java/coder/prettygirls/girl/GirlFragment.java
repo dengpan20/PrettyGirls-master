@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
@@ -36,8 +37,10 @@ import coder.prettygirls.data.source.GirlsDataSourceInterface;
 import coder.prettygirls.data.source.GirlsResponsitory;
 import coder.prettygirls.data.source.PicDataSource;
 import coder.prettygirls.data.source.PicResponsitory;
+import coder.prettygirls.http.DownloadService;
 import coder.prettygirls.util.BitmapUtil;
 import coder.prettygirls.util.LogUtil;
+import coder.prettygirls.util.ToastUtil;
 import coder.prettygirls.util.YupooPicUtil;
 import coder.prettygirls.widget.PinchImageView;
 
@@ -63,6 +66,7 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
     private Unbinder unbinder;
 
     private OnGirlChange mListener;
+    private Prod prod;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -134,6 +138,7 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
 //            current = bundle.getInt("current");
             String url=bundle.getString("url");
             Prod prod = (Prod) bundle.getSerializable("prod");
+            this.prod = prod;
 //            PicBean picBean=null;
             new PicResponsitory().getProd(prod, 1, new PicDataSource.LoadPicProd() {
                 @Override
@@ -199,6 +204,9 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
             return;
         }
         Bitmap bitmap = BitmapUtil.drawableToBitmap(imageView.getDrawable());
+        if(bitmap == null || bitmap.getHeight()<=0 || bitmap.getWidth()<=0){
+            return ;
+        }
         Palette.Builder builder = Palette.from(bitmap);
         builder.generate(new Palette.PaletteAsyncListener() {
             @Override
@@ -223,6 +231,20 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
             Snackbar.make(mRootView, "大爷，下载出错了哦~", Snackbar.LENGTH_LONG).show();
         }
     }
+    public void saveMutiPic(){
+        new DownloadService(Environment.getExternalStorageDirectory() + "/yupoo/" + YupooPicUtil.getFileName(prod.getProdName()), prod.getPiclist(), new DownloadService.DownloadStateListener() {
+            @Override
+            public void onFinish() {
+                Snackbar.make(mRootView, "大爷，下载好了呢~", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailed() {
+                Snackbar.make(mRootView, "大爷，下载出错了哦~", Snackbar.LENGTH_LONG).show();
+
+            }
+        }).startDownload();
+    }
 
     public void shareGirl() {
         PinchImageView imageView = getCurrentImageView();
@@ -237,7 +259,7 @@ public class GirlFragment extends BaseFragment implements ViewPager.OnPageChange
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
                 shareIntent.setType("image/*");
-                startActivity(Intent.createChooser(shareIntent, "分享MeiZhi到"));
+                startActivity(Intent.createChooser(shareIntent, "分享图片到"));
             } else {
                 Snackbar.make(mRootView, "大爷，分享出错了哦~", Snackbar.LENGTH_LONG).show();
             }

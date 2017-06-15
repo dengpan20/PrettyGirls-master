@@ -13,7 +13,8 @@ import coder.prettygirls.util.FileUtil;
 public class Constants {
 
     public static final String GANHUO_API = "http://gank.io/";
-    public static final String SHOP_ADDRESS ="http://v.yupoo.com/photos/9188/collections/";
+//    public static final String SHOP_ADDRESS ="http://v.yupoo.com/photos/9188/collections/";
+    public static final String SHOP_ADDRESS ="http://v.yupoo.com/photos/shisuyundongpifa/collections/";
 
     public static final String dir = FileUtil.getDiskCacheDir(MyApplication.getIntstance()) + "/girls";
     public static String baseUrl="http://www.fydzv.com/tags/%E8%AF%B1%E6%83%91/";

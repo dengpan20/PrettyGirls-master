@@ -70,6 +70,9 @@ public class CategoryItemListFragment extends BaseFragment implements CategoryIt
         if (networkErrorView != null) {
             networkErrorView.setVisibility(View.GONE);
         }
+        if(page>1){
+            stopMore();
+        }
     }
 
     @Override
@@ -111,7 +114,6 @@ public class CategoryItemListFragment extends BaseFragment implements CategoryIt
 //                Intent intent = new Intent(mActivity, ShowActivity.class);
                 intent.putExtra("prod", (Serializable) prods.get(position));
                 mActivity.startActivity(intent);
-                ToastUtil.showLong(getContext(),"12");
             }
         });
 
@@ -138,5 +140,8 @@ public class CategoryItemListFragment extends BaseFragment implements CategoryIt
     public void onLoadMore() {
         page++;
         mPresenter.getProds(category,page,false);
+    }
+    public void stopMore(){
+        mAdapter.stopMore();
     }
 }

@@ -100,6 +100,9 @@ public class CategoryFragment extends BaseFragment implements CategoryContact.Vi
         if (networkErrorView != null) {
             networkErrorView.setVisibility(View.GONE);
         }
+        if(page>1){
+            stopMore();
+        }
     }
 
     @Override
@@ -130,5 +133,8 @@ public class CategoryFragment extends BaseFragment implements CategoryContact.Vi
         page++;
         LogUtil.e("page=="+page);
         mPresenter.getCate(page,false);
+    }
+    public void stopMore(){
+        mAdapter.stopMore();
     }
 }

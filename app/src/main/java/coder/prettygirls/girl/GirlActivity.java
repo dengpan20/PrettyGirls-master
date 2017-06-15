@@ -80,7 +80,8 @@ public class GirlActivity extends AppActivity implements GirlFragment.OnGirlChan
             mGirlFragment.shareGirl();
             return true;
         } else if (id == R.id.action_save) {
-            mGirlFragment.saveGirl();
+//            mGirlFragment.saveGirl();
+            mGirlFragment.saveMutiPic();
             return true;
         }
 

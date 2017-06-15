@@ -110,6 +110,9 @@ public class HomeActivity extends AppActivity implements AdapterView.OnItemClick
             startActivity(intent);
             return true;
         }
+        if(id == R.id.action_shop_list){
+
+        }
 
         return super.onOptionsItemSelected(item);
     }

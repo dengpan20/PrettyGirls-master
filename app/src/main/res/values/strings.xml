@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">PrettyGirls</string>
     <string name="action_about">关于我</string>
+    <string name="action_shop_list">商店列表</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

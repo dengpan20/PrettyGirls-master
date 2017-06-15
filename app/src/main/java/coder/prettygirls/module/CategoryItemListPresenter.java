@@ -21,12 +21,16 @@ public class CategoryItemListPresenter implements CategoryItemListContact.Presen
         new PicResponsitory().getItem(category, page, new PicDataSource.LoadPicProds() {
             @Override
             public void onSussess(List<Prod> prods) {
-                if(isRefresh){
-                    view.refresh(prods);
+                if(prods.size()>0) {
+                    if (isRefresh) {
+                        view.refresh(prods);
+                    } else {
+                        view.loadMore(prods);
+                    }
+                    view.showNomal();
                 }else{
-                    view.loadMore(prods);
+                    view.showNomal();
                 }
-                view.showNomal();
             }
 
             @Override

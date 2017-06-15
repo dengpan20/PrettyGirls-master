@@ -109,9 +109,9 @@ public class GetInfoFromNet {
     }
     public static void startNextPageCategory(String url,int page){
         if(page==1||page == 0){
-            page = 0;
+            page = 1;
         }
-            String indexUrl = url+"page"+(page+1);
+            String indexUrl = url+"page"+(page);
             getCategory(indexUrl);
     }
     public static void startNextPageProd(String url){
@@ -201,9 +201,9 @@ public class GetInfoFromNet {
     private static void getCategoryItemWithPage( Category category, int page) {
         LogUtil.d("传入的size＝"+page);
         if(page==1||page == 0){
-            page = 0;
+            page = 1;
         }
-        String indexUrl = category.getCategory_url()+"page"+(page+1);
+        String indexUrl = category.getCategory_url()+"page"+(page);
         Document htmlDouc = getHtmlDouc(indexUrl);
         if(page>getPageNumsFromDoc(htmlDouc))//页数
         {

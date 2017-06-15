@@ -29,12 +29,13 @@
         </activity>
         <activity
             android:name=".home.HomeActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity android:name=".girl.GirlActivity" />
         <activity
             android:name=".about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.ShowActivity"></activity>
+        <activity android:name=".module.ShowActivity" />
+        <activity android:name=".module.shop.ShopActivity"></activity>
     </application>
 
 </manifest>
