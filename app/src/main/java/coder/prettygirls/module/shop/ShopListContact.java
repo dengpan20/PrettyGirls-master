@@ -5,6 +5,7 @@ import java.util.List;
 import coder.prettygirls.BasePresenter;
 import coder.prettygirls.BaseView;
 import coder.prettygirls.data.bean.picbean.Shop;
+import coder.prettygirls.data.source.PicDataSource;
 
 /**
  * Created by dengpan on 17/6/15.
@@ -18,6 +19,6 @@ public interface ShopListContact {
         void showError();
     }
     interface Presenter extends BasePresenter{
-//        getShopList();
+       void getShopList(int page, int pageSize);
     }
 }

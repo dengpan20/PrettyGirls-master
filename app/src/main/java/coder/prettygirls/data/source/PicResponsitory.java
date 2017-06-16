@@ -4,6 +4,7 @@ import java.util.List;
 
 import coder.prettygirls.data.bean.picbean.Category;
 import coder.prettygirls.data.bean.picbean.Prod;
+import coder.prettygirls.data.source.remote.RemotePicDataSource;
 import coder.prettygirls.http.PicJsoup;
 import coder.prettygirls.http.jsoup.GetInfoFromNet;
 import coder.prettygirls.http.jsoup.ParsHtml;
@@ -15,9 +16,10 @@ import coder.prettygirls.util.LogUtil;
  */
 
 public class PicResponsitory {
+    private RemotePicDataSource dataSource;
 
     public PicResponsitory(){
-
+        dataSource = new RemotePicDataSource();
     }
     public void getCate(String url, int size, final PicDataSource.LoadPicCate callback) {
         PicJsoup.getParsHtml().getCate(url, size, new PicHtml.ResponceInfo() {
@@ -60,5 +62,8 @@ public class PicResponsitory {
 
             }
         });
+    }
+    public void getAllShop(int page, int pageSize, PicDataSource.LoadShopCallBack callBack){
+        dataSource.getAllShop(page,pageSize,callBack);
     }
 }

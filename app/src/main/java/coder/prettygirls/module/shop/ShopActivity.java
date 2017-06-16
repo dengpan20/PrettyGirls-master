@@ -12,6 +12,7 @@ import coder.mylibrary.base.AppActivity;
 import coder.mylibrary.base.BaseFragment;
 import coder.prettygirls.R;
 import coder.prettygirls.data.bean.picbean.Category;
+import coder.prettygirls.data.bean.picbean.Shop;
 import coder.prettygirls.module.CategoryItemListFragment;
 
 public class ShopActivity extends AppActivity {
@@ -30,8 +31,7 @@ public class ShopActivity extends AppActivity {
 
     @Override
     protected BaseFragment getFirstFragment() {
-        Category category = (Category) getIntent().getSerializableExtra("category");
-        CategoryItemListFragment fragment = CategoryItemListFragment.getInstant(category);
+        ShopListFragment fragment = ShopListFragment.getInstant();
         return fragment;
     }
 
@@ -44,7 +44,7 @@ public class ShopActivity extends AppActivity {
     }
 
     private void initView() {
-        mToolbar.setTitle("分类集合");
+        mToolbar.setTitle("店铺集合");
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ public class ShopActivity extends AppActivity {
     public void onClick(View view) {
 
     }
-    private void finishActivity() {
+    public void finishActivity() {
         finish();
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }

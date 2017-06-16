@@ -48,10 +48,16 @@ public class CategoryFragment extends BaseFragment implements CategoryContact.Vi
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
-        mPresenter = new CategoryPresenter(this);
+        mPresenter = new CategoryPresenter(this,getHoldingActivity());
 
         initRecyclerView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mPresenter.start();
+
     }
 
     private void initRecyclerView() {

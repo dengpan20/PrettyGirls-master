@@ -25,6 +25,7 @@ import coder.prettygirls.about.AboutActivity;
 import coder.prettygirls.app.Constants;
 import coder.prettygirls.data.bean.PicCategory;
 import coder.prettygirls.module.CategoryFragment;
+import coder.prettygirls.module.shop.ShopActivity;
 import coder.prettygirls.widget.MyGridView;
 
 public class HomeActivity extends AppActivity implements AdapterView.OnItemClickListener {
@@ -111,7 +112,9 @@ public class HomeActivity extends AppActivity implements AdapterView.OnItemClick
             return true;
         }
         if(id == R.id.action_shop_list){
-
+            Intent intent = new Intent(HomeActivity.this, ShopActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

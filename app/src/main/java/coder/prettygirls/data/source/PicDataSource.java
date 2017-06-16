@@ -4,6 +4,7 @@ import java.util.List;
 
 import coder.prettygirls.data.bean.picbean.Category;
 import coder.prettygirls.data.bean.picbean.Prod;
+import coder.prettygirls.data.bean.picbean.Shop;
 import coder.prettygirls.http.jsoup.GetInfoFromNet;
 
 /**
@@ -31,6 +32,8 @@ public interface PicDataSource {
      * @param complete
      */
     void getProd(Prod prod,int size, GetInfoFromNet.OnGetProdComplete complete);
+    void getAllShop(int page,int pageSize,LoadShopCallBack callBack);
+
     public interface LoadPicCate{
         void onSussess(List<Category> categories);
         void onFail();
@@ -41,6 +44,10 @@ public interface PicDataSource {
     }
     public interface LoadPicProd{
         void onSussess(Prod prod);
+        void onFail();
+    }
+    public interface LoadShopCallBack{
+        void onSuccess(List<Shop> shops);
         void onFail();
     }
 }
