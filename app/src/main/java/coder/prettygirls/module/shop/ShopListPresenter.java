@@ -26,7 +26,7 @@ public class ShopListPresenter implements ShopListContact.Presenter {
 
     @Override
     public void getShopList(final int page, int pageSize) {
-        picResponsitory.getAllShop(page, pageSize, new PicDataSource.LoadShopCallBack() {
+        picResponsitory.getShopByPage(page, pageSize, new PicDataSource.LoadShopCallBack() {
             @Override
             public void onSuccess(List<Shop> shops) {
                 if(page==1){

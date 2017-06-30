@@ -33,6 +33,7 @@ public interface PicDataSource {
      */
     void getProd(Prod prod,int size, GetInfoFromNet.OnGetProdComplete complete);
     void getAllShop(int page,int pageSize,LoadShopCallBack callBack);
+    void getShopBy(int page,int pageSize,LoadShopCallBack callBack);
 
     public interface LoadPicCate{
         void onSussess(List<Category> categories);

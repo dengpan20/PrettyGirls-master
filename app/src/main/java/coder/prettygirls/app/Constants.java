@@ -13,7 +13,8 @@ import coder.prettygirls.util.FileUtil;
 public class Constants {
 
     public static final String GANHUO_API = "http://gank.io/";
-    public static final String BASE_ADDRESS = "http://192.168.2.138:5555/";
+//    public static final String BASE_ADDRESS = "http://192.168.2.138:5555/";
+    public static final String BASE_ADDRESS ="http://182.61.52.225:8080/Yupoo/";
 //    public static final String SHOP_ADDRESS ="http://v.yupoo.com/photos/9188/collections/";
     public static final String SHOP_ADDRESS ="http://v.yupoo.com/photos/shisuyundongpifa/collections/";
 

@@ -5,6 +5,7 @@ import java.util.List;
 import coder.prettygirls.data.bean.GirlsBean;
 import coder.prettygirls.data.bean.picbean.Category;
 import coder.prettygirls.data.bean.picbean.Prod;
+import coder.prettygirls.data.bean.picbean.ResponseData;
 import coder.prettygirls.data.bean.picbean.Shop;
 import coder.prettygirls.data.source.PicDataSource;
 import coder.prettygirls.http.GirlsRetrofit;
@@ -60,6 +61,37 @@ public class RemotePicDataSource implements PicDataSource {
                     public void onNext(List<Shop> list) {
                         callBack.onSuccess(list);
                     }
+                });
+    }
+
+    @Override
+    public void getShopBy(int page, int pageSize, final LoadShopCallBack callBack) {
+        YupooRetrofit.getRetrofit()
+                .create(YupooService.class)
+                .getShopBy(page+"",pageSize+"")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onFail();
+                    }
+
+                    @Override
+                    public void onNext(ResponseData responseData) {
+                        if(responseData.getCode()!= 0000){
+                            callBack.onFail();
+                            return;
+                        }
+                        callBack.onSuccess(responseData.getData().getShopList());
+                    }
+
+
                 });
     }
 }

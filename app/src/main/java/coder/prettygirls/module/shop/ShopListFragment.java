@@ -96,6 +96,9 @@ public class ShopListFragment extends BaseFragment implements ShopListContact.Vi
 
     @Override
     public void loadMore(List<Shop> list) {
+        if(list.size()==0){
+            stopMore();
+        }
         shops.addAll(list);
         mAdapter.addAll(list);
     }
@@ -104,9 +107,6 @@ public class ShopListFragment extends BaseFragment implements ShopListContact.Vi
     public void showNomal() {
         if (networkErrorView != null) {
             networkErrorView.setVisibility(View.GONE);
-        }
-        if(page>1){
-            stopMore();
         }
     }
 
@@ -130,7 +130,7 @@ public class ShopListFragment extends BaseFragment implements ShopListContact.Vi
     @Override
     public void onLoadMore() {
         page++;
-        mPresenter.getShopList(1,10);
+        mPresenter.getShopList(page,1);
     }
     public void stopMore(){
         mAdapter.stopMore();

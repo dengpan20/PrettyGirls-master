@@ -66,4 +66,7 @@ public class PicResponsitory {
     public void getAllShop(int page, int pageSize, PicDataSource.LoadShopCallBack callBack){
         dataSource.getAllShop(page,pageSize,callBack);
     }
+    public void getShopByPage(int page, int pageSize, PicDataSource.LoadShopCallBack callBack){
+        dataSource.getShopBy(page,pageSize,callBack);
+    }
 }
